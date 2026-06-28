@@ -122,7 +122,7 @@ public sealed unsafe class StringHandler : IDisposable
                     }
                 }
                 fixed (byte* newInput = sb.GetViewAsSpan())
-                    return _formatStringHook.Original(thisPtr, newInput, localParameters, output);
+                    return _formatStringHook!.Original(thisPtr, newInput, localParameters, output);
             }
             catch (Exception ex)
             {
@@ -137,14 +137,14 @@ public sealed unsafe class StringHandler : IDisposable
         }
         else
         {
-            var result = _formatStringHook.Original(thisPtr, input, localParameters, output);
+            var result = _formatStringHook!.Original(thisPtr, input, localParameters, output);
             raceParam.IntValue = oldRace;
             genderParam.IntValue = oldGender;
             return result;
         }
 
         originalFormatString:
-        return _formatStringHook.Original(thisPtr, input, localParameters, output);
+        return _formatStringHook!.Original(thisPtr, input, localParameters, output);
     }
 
     public void RefreshConfig()
